@@ -19,7 +19,7 @@
         "id": "e80ba914f330e4bf",
         "type": "group",
         "z": "d3bafc4d888d1327",
-        "name": "Ingreso de Datos",
+        "name": "Ingreso de Datos HMI",
         "style": {
             "label": true
         },
@@ -28,12 +28,16 @@
             "e80a19e4ef29647c",
             "ef27165957a2a7ce",
             "9837c6631b22c877",
-            "497bb3a5985ccf6a"
+            "497bb3a5985ccf6a",
+            "43afa594f96c4de1",
+            "b31d9258d5457c6b",
+            "d01294d76e015e0e",
+            "2597d26d4122589d"
         ],
-        "x": 34,
-        "y": 39,
-        "w": 572,
-        "h": 202
+        "x": 74,
+        "y": 19,
+        "w": 772,
+        "h": 242
     },
     {
         "id": "214bb5bb7c3c748a",
@@ -51,8 +55,8 @@
             "b577870f2cd9ac34",
             "b1fa050b3d65483f"
         ],
-        "x": 94,
-        "y": 399,
+        "x": 854,
+        "y": 19,
         "w": 572,
         "h": 182
     },
@@ -232,8 +236,8 @@
         "outputs": 1,
         "useDifferentColor": false,
         "className": "",
-        "x": 570,
-        "y": 500,
+        "x": 1330,
+        "y": 120,
         "wires": [
             []
         ]
@@ -362,8 +366,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 400,
-        "y": 540,
+        "x": 1160,
+        "y": 160,
         "wires": [
             [
                 "2cc3886a218bfd36"
@@ -382,8 +386,8 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "x": 250,
-        "y": 500,
+        "x": 1010,
+        "y": 120,
         "wires": [
             [
                 "bacdb831509bd076"
@@ -395,16 +399,16 @@
         "type": "function",
         "z": "d3bafc4d888d1327",
         "g": "214bb5bb7c3c748a",
-        "name": "function 1",
-        "func": "var msg = {};\nvar msg1 = {};\nmsg.payload = Math.round(Math.random() * 100);\nmsg.topic = 'SetPoint Presión';\nmsg1.payload = Math.round(Math.random() * 100);\nmsg1.topic = 'Presión';\nreturn [msg, msg1];",
+        "name": "Grafica",
+        "func": "// adquision de variables\nvar setPoint_Presion = global.get('setPoint_Presion')||-2;\nif(setPoint_Presion != -2){\n    var msg = {};\n    var msg1 = {};\n    msg.payload = setPoint_Presion;\n    msg.topic = 'SetPoint Presión';\n    msg1.payload = Math.round(Math.random() * 100);\n    msg1.topic = 'Presión';\n    node.status({fill:\"green\",shape:\"dot\",text:setPoint_Presion + ' psi'});\n    return [msg, msg1];\n}else {\n    node.status({fill:\"red\",shape:\"dot\",text:\"No Data\"});\n}\n",
         "outputs": 2,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 420,
-        "y": 440,
+        "x": 1180,
+        "y": 60,
         "wires": [
             [
                 "2cc3886a218bfd36"
@@ -426,8 +430,8 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "x": 250,
-        "y": 440,
+        "x": 1010,
+        "y": 60,
         "wires": [
             [
                 "86657a338622ef8d"
@@ -455,8 +459,8 @@
         "payloadType": "str",
         "topic": "topic",
         "topicType": "msg",
-        "x": 210,
-        "y": 540,
+        "x": 970,
+        "y": 160,
         "wires": [
             [
                 "bacdb831509bd076"
@@ -472,7 +476,7 @@
         "label": "SetPoint de Presión",
         "tooltip": "",
         "group": "d5468e5220cc968f",
-        "order": 0,
+        "order": 1,
         "width": 0,
         "height": 0,
         "passthru": true,
@@ -483,8 +487,8 @@
         "max": "100",
         "step": 1,
         "className": "",
-        "x": 160,
-        "y": 80,
+        "x": 400,
+        "y": 60,
         "wires": [
             [
                 "9837c6631b22c877",
@@ -499,24 +503,27 @@
         "g": "e80ba914f330e4bf",
         "name": "",
         "group": "d5468e5220cc968f",
-        "order": 1,
+        "order": 3,
         "width": 0,
         "height": 0,
         "passthru": false,
         "label": "Aceptar",
         "tooltip": "",
-        "color": "",
-        "bgcolor": "",
+        "color": "white",
+        "bgcolor": "green",
         "className": "",
         "icon": "",
         "payload": "",
         "payloadType": "str",
         "topic": "topic",
         "topicType": "msg",
-        "x": 160,
-        "y": 160,
+        "x": 360,
+        "y": 140,
         "wires": [
-            []
+            [
+                "43afa594f96c4de1",
+                "b31d9258d5457c6b"
+            ]
         ]
     },
     {
@@ -526,30 +533,33 @@
         "g": "e80ba914f330e4bf",
         "name": "",
         "group": "d5468e5220cc968f",
-        "order": 2,
+        "order": 4,
         "width": 0,
         "height": 0,
         "passthru": false,
         "label": "Rechazar",
         "tooltip": "",
-        "color": "",
-        "bgcolor": "",
+        "color": "white",
+        "bgcolor": "red",
         "className": "",
         "icon": "",
         "payload": "",
         "payloadType": "str",
         "topic": "topic",
         "topicType": "msg",
-        "x": 160,
-        "y": 200,
+        "x": 360,
+        "y": 180,
         "wires": [
-            []
+            [
+                "b31d9258d5457c6b"
+            ]
         ]
     },
     {
         "id": "d01294d76e015e0e",
         "type": "inject",
         "z": "d3bafc4d888d1327",
+        "g": "e80ba914f330e4bf",
         "name": "Inicializar Variables",
         "props": [],
         "repeat": "",
@@ -557,11 +567,12 @@
         "once": true,
         "onceDelay": "1",
         "topic": "",
-        "x": 570,
-        "y": 280,
+        "x": 210,
+        "y": 200,
         "wires": [
             [
-                "2597d26d4122589d"
+                "2597d26d4122589d",
+                "b31d9258d5457c6b"
             ]
         ]
     },
@@ -569,16 +580,17 @@
         "id": "2597d26d4122589d",
         "type": "function",
         "z": "d3bafc4d888d1327",
+        "g": "e80ba914f330e4bf",
         "name": "function 2",
-        "func": "var setPoint_Presion = global.get('setPoint_Presion')||-2;\nif(setPoint_Presion == -2){\n    global.set(setPoint_Presion,100);\n}\n",
+        "func": "var setPoint_Presion = global.get('setPoint_Presion')||-2;\nif(setPoint_Presion == -2){\n    global.set('setPoint_Presion',100);\n}\n",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 660,
-        "y": 320,
+        "x": 380,
+        "y": 220,
         "wires": [
             []
         ]
@@ -604,8 +616,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 430,
-        "y": 80,
+        "x": 670,
+        "y": 60,
         "wires": [
             []
         ]
@@ -616,11 +628,11 @@
         "z": "d3bafc4d888d1327",
         "g": "e80ba914f330e4bf",
         "group": "d5468e5220cc968f",
-        "order": 3,
+        "order": 2,
         "width": 0,
         "height": 0,
         "name": "",
-        "label": "SetPoint",
+        "label": "SetPoint Text",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
         "className": "",
@@ -628,8 +640,64 @@
         "font": "",
         "fontSize": 16,
         "color": "#000000",
-        "x": 340,
-        "y": 120,
+        "x": 590,
+        "y": 100,
         "wires": []
+    },
+    {
+        "id": "43afa594f96c4de1",
+        "type": "change",
+        "z": "d3bafc4d888d1327",
+        "g": "e80ba914f330e4bf",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "setPoint_Presion",
+                "pt": "global",
+                "to": "SetPoint_PID_Presion_AUX",
+                "tot": "flow",
+                "dc": true
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 560,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b31d9258d5457c6b",
+        "type": "change",
+        "z": "d3bafc4d888d1327",
+        "g": "e80ba914f330e4bf",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "setPoint_Presion",
+                "tot": "global",
+                "dc": true
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 200,
+        "y": 60,
+        "wires": [
+            [
+                "6affae2739636fd4"
+            ]
+        ]
     }
 ]
