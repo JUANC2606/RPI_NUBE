@@ -16,6 +16,47 @@
         "env": []
     },
     {
+        "id": "e80ba914f330e4bf",
+        "type": "group",
+        "z": "d3bafc4d888d1327",
+        "name": "Ingreso de Datos",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "6affae2739636fd4",
+            "e80a19e4ef29647c",
+            "ef27165957a2a7ce",
+            "9837c6631b22c877",
+            "497bb3a5985ccf6a"
+        ],
+        "x": 34,
+        "y": 39,
+        "w": 572,
+        "h": 202
+    },
+    {
+        "id": "214bb5bb7c3c748a",
+        "type": "group",
+        "z": "d3bafc4d888d1327",
+        "name": "Grafica de Tendencia",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "2cc3886a218bfd36",
+            "bacdb831509bd076",
+            "5e13ef0e251ac89f",
+            "86657a338622ef8d",
+            "b577870f2cd9ac34",
+            "b1fa050b3d65483f"
+        ],
+        "x": 94,
+        "y": 399,
+        "w": 572,
+        "h": 182
+    },
+    {
         "id": "83028f5fc4af6c91",
         "type": "ui_base",
         "theme": {
@@ -24,7 +65,8 @@
                 "default": "#0094CE",
                 "baseColor": "#0094CE",
                 "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
-                "edited": false
+                "edited": true,
+                "reset": false
             },
             "darkTheme": {
                 "default": "#097479",
@@ -128,5 +170,466 @@
         "order": 2,
         "disabled": false,
         "hidden": false
+    },
+    {
+        "id": "d5468e5220cc968f",
+        "type": "ui_group",
+        "name": "Pantalla",
+        "tab": "0babc20c7149c07a",
+        "order": 1,
+        "disp": false,
+        "width": "12",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "88cb12c1a31a6f43",
+        "type": "ui_group",
+        "name": "Pantalla",
+        "tab": "5aaaf04bcb7e61c3",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "2cc3886a218bfd36",
+        "type": "ui_chart",
+        "z": "d3bafc4d888d1327",
+        "g": "214bb5bb7c3c748a",
+        "name": "",
+        "group": "88cb12c1a31a6f43",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "label": "Tendencia",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": "1",
+        "removeOlderPoints": "200",
+        "removeOlderUnit": "60",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#00ff00",
+            "#0080ff",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 570,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2ae7c9b58b910507",
+        "type": "inject",
+        "z": "d3bafc4d888d1327",
+        "name": "",
+        "props": [],
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 170,
+        "y": 280,
+        "wires": [
+            [
+                "69253d4be579e229"
+            ]
+        ]
+    },
+    {
+        "id": "69253d4be579e229",
+        "type": "function",
+        "z": "d3bafc4d888d1327",
+        "name": "PID",
+        "func": "// Definir una clase PID\nclass PID_Class {\n    constructor(Kp, Ki, Kd, Ts, pastErrors, controlSignal) {\n        this.Kp = Kp;//Ganancia proporcional\n        this.Ki = Ki;//Ganancia Integral\n        this.Kd = Kd;// Ganancia Derivativa\n        this.Ts = Ts;//tiempo de muestreo\n        this.pastErrors = pastErrors;//vector de acumulación de errores pasados \n        this.controlSignal = controlSignal;//Salida de control\n    }\n}\n//Definir Función del PID\nfunction PID_Funtion(currentError,PID = PID_Class,minimoCV = 0,maximoCV = 100) {\n    // Añadir el error actual al arreglo de errores pasados\n    PID.pastErrors.push(currentError);\n    // Limitar el tamaño del vector de errores a un máximo de 500 elementos\n    var maxSize = 100;\n    if (PID.pastErrors.length > maxSize) {\n        PID.pastErrors.shift(); // Eliminar el primer elemento (el más antiguo)\n    }\n\n    // Calcular la parte proporcional del control\n    var proportionalTerm = PID.Kp * currentError;\n\n    // Calcular la parte integral del control\n    var integralTerm = 0;\n    for (var i = 0; i < PID.pastErrors.length; i++) {\n        integralTerm += PID.pastErrors[i];\n    }\n    integralTerm *= PID.Ki * PID.Ts;\n\n    // Calcular la parte derivativa del control\n    var derivativeTerm = PID.Kd * (currentError - PID.pastErrors[PID.pastErrors.length - 2]) / PID.Ts;\n    // Calcular la señal de control\n    PID.controlSignal = proportionalTerm + integralTerm + derivativeTerm;\n    // Limitar la señal de control para evitar la saturación\n    PID.controlSignal = Math.min(Math.max(PID.controlSignal, minimoCV), maximoCV); // Limitar entre 0 y 100\n    return PID;\n}\nvar setPoint = 120;\nvar Procces_Value = 100;\nvar currentError = setPoint - Procces_Value; // Supongamos que tenemos un error actual de 1\nvar tiempoMuestreo = 1;\nvar min = 60, max = 65;\nvar PID_Presion = flow.get('PID_Presion')||new PID_Class(3,0.001,0,tiempoMuestreo,[],0,);\n\n// guardar variables de monitoreo \ncontext.set('PID_Presion_monitoreo', JSON.parse(JSON.stringify(PID_Presion)),'memoryOnly');\n\n//Ejecutar calculo del PID\nPID_Presion = PID_Funtion(currentError, PID_Presion,min,max);\n\n//guardar calculo del PID\nflow.set('PID_Presion', PID_Presion);\n// guardar los cambios\nnode.status({ fill: \"red\", shape: \"ring\", text: \"Salida Control : \" + PID_Presion.controlSignal + ' SizeInte ' + PID_Presion.pastErrors.length});",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 290,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0afbc114682fe6b2",
+        "type": "inject",
+        "z": "d3bafc4d888d1327",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "120",
+        "payloadType": "num",
+        "x": 170,
+        "y": 320,
+        "wires": [
+            [
+                "61f64525f2014cf0"
+            ]
+        ]
+    },
+    {
+        "id": "61f64525f2014cf0",
+        "type": "change",
+        "z": "d3bafc4d888d1327",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "SetPoint_PID_Presion",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 380,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4456936736650888",
+        "type": "inject",
+        "z": "d3bafc4d888d1327",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "100",
+        "payloadType": "num",
+        "x": 170,
+        "y": 370,
+        "wires": [
+            [
+                "61f64525f2014cf0"
+            ]
+        ]
+    },
+    {
+        "id": "bacdb831509bd076",
+        "type": "function",
+        "z": "d3bafc4d888d1327",
+        "g": "214bb5bb7c3c748a",
+        "name": "Limpiar Grafica",
+        "func": "msg.payload = []\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 540,
+        "wires": [
+            [
+                "2cc3886a218bfd36"
+            ]
+        ]
+    },
+    {
+        "id": "5e13ef0e251ac89f",
+        "type": "inject",
+        "z": "d3bafc4d888d1327",
+        "g": "214bb5bb7c3c748a",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 250,
+        "y": 500,
+        "wires": [
+            [
+                "bacdb831509bd076"
+            ]
+        ]
+    },
+    {
+        "id": "86657a338622ef8d",
+        "type": "function",
+        "z": "d3bafc4d888d1327",
+        "g": "214bb5bb7c3c748a",
+        "name": "function 1",
+        "func": "var msg = {};\nvar msg1 = {};\nmsg.payload = Math.round(Math.random() * 100);\nmsg.topic = 'SetPoint Presión';\nmsg1.payload = Math.round(Math.random() * 100);\nmsg1.topic = 'Presión';\nreturn [msg, msg1];",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 440,
+        "wires": [
+            [
+                "2cc3886a218bfd36"
+            ],
+            [
+                "2cc3886a218bfd36"
+            ]
+        ]
+    },
+    {
+        "id": "b577870f2cd9ac34",
+        "type": "inject",
+        "z": "d3bafc4d888d1327",
+        "g": "214bb5bb7c3c748a",
+        "name": "",
+        "props": [],
+        "repeat": "2",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 250,
+        "y": 440,
+        "wires": [
+            [
+                "86657a338622ef8d"
+            ]
+        ]
+    },
+    {
+        "id": "b1fa050b3d65483f",
+        "type": "ui_button",
+        "z": "d3bafc4d888d1327",
+        "g": "214bb5bb7c3c748a",
+        "name": "",
+        "group": "88cb12c1a31a6f43",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Limpiar Tendencia",
+        "tooltip": "",
+        "color": "white",
+        "bgcolor": "red",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 210,
+        "y": 540,
+        "wires": [
+            [
+                "bacdb831509bd076"
+            ]
+        ]
+    },
+    {
+        "id": "6affae2739636fd4",
+        "type": "ui_slider",
+        "z": "d3bafc4d888d1327",
+        "g": "e80ba914f330e4bf",
+        "name": "",
+        "label": "SetPoint de Presión",
+        "tooltip": "",
+        "group": "d5468e5220cc968f",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "outs": "all",
+        "topic": "topic",
+        "topicType": "msg",
+        "min": 0,
+        "max": "100",
+        "step": 1,
+        "className": "",
+        "x": 160,
+        "y": 80,
+        "wires": [
+            [
+                "9837c6631b22c877",
+                "497bb3a5985ccf6a"
+            ]
+        ]
+    },
+    {
+        "id": "e80a19e4ef29647c",
+        "type": "ui_button",
+        "z": "d3bafc4d888d1327",
+        "g": "e80ba914f330e4bf",
+        "name": "",
+        "group": "d5468e5220cc968f",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Aceptar",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 160,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ef27165957a2a7ce",
+        "type": "ui_button",
+        "z": "d3bafc4d888d1327",
+        "g": "e80ba914f330e4bf",
+        "name": "",
+        "group": "d5468e5220cc968f",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Rechazar",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 160,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d01294d76e015e0e",
+        "type": "inject",
+        "z": "d3bafc4d888d1327",
+        "name": "Inicializar Variables",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1",
+        "topic": "",
+        "x": 570,
+        "y": 280,
+        "wires": [
+            [
+                "2597d26d4122589d"
+            ]
+        ]
+    },
+    {
+        "id": "2597d26d4122589d",
+        "type": "function",
+        "z": "d3bafc4d888d1327",
+        "name": "function 2",
+        "func": "var setPoint_Presion = global.get('setPoint_Presion')||-2;\nif(setPoint_Presion == -2){\n    global.set(setPoint_Presion,100);\n}\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9837c6631b22c877",
+        "type": "change",
+        "z": "d3bafc4d888d1327",
+        "g": "e80ba914f330e4bf",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "SetPoint_PID_Presion_AUX",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg",
+                "dc": true
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 430,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "497bb3a5985ccf6a",
+        "type": "ui_text",
+        "z": "d3bafc4d888d1327",
+        "g": "e80ba914f330e4bf",
+        "group": "d5468e5220cc968f",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "SetPoint",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 340,
+        "y": 120,
+        "wires": []
     }
 ]
