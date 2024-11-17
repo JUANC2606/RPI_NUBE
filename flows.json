@@ -8,14 +8,6 @@
         "env": []
     },
     {
-        "id": "4e4ef56e226a542b",
-        "type": "tab",
-        "label": "Envio de Data LOCAL",
-        "disabled": false,
-        "info": "",
-        "env": []
-    },
-    {
         "id": "e80ba914f330e4bf",
         "type": "group",
         "z": "d3bafc4d888d1327",
@@ -36,7 +28,7 @@
         ],
         "x": 14,
         "y": 19,
-        "w": 852,
+        "w": 842,
         "h": 242
     },
     {
@@ -73,13 +65,12 @@
             "1d0ad6849f56b3db",
             "822289ee0d9e21b6",
             "a8ba34796b55aa64",
-            "1cf6a8bfce54fbe5",
-            "80f84f7f49f12025"
+            "1cf6a8bfce54fbe5"
         ],
         "x": 24,
         "y": 279,
-        "w": 722,
-        "h": 162
+        "w": 802,
+        "h": 82
     },
     {
         "id": "83028f5fc4af6c91",
@@ -217,6 +208,20 @@
         "width": "6",
         "collapse": false,
         "className": ""
+    },
+    {
+        "id": "a6eb8721741008d0",
+        "type": "tls-config",
+        "name": "",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "b0b5f6d17e4ee7ed2f3d765054e8785e02f5583d8b130eef6e704d8fd403d4ae-certificate.pem.crt",
+        "keyname": "b0b5f6d17e4ee7ed2f3d765054e8785e02f5583d8b130eef6e704d8fd403d4ae-private.pem.key",
+        "caname": "AmazonRootCA1.pem",
+        "servername": "",
+        "verifyservercert": true,
+        "alpnprotocol": ""
     },
     {
         "id": "2cc3886a218bfd36",
@@ -623,12 +628,11 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 510,
+        "x": 530,
         "y": 320,
         "wires": [
             [
-                "a8ba34796b55aa64",
-                "80f84f7f49f12025"
+                "a8ba34796b55aa64"
             ]
         ]
     },
@@ -694,7 +698,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 660,
+        "x": 740,
         "y": 320,
         "wires": [
             []
@@ -720,23 +724,5 @@
                 "1d0ad6849f56b3db"
             ]
         ]
-    },
-    {
-        "id": "80f84f7f49f12025",
-        "type": "debug",
-        "z": "d3bafc4d888d1327",
-        "g": "db0763cc983c9bdb",
-        "name": "debug 1",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": true,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "payload",
-        "statusType": "auto",
-        "x": 420,
-        "y": 400,
-        "wires": []
     }
 ]
