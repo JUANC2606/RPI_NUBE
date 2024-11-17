@@ -66,7 +66,7 @@
             "822289ee0d9e21b6",
             "1cf6a8bfce54fbe5"
         ],
-        "x": 24,
+        "x": 44,
         "y": 279,
         "w": 642,
         "h": 82
@@ -86,6 +86,25 @@
         "x": 34,
         "y": 379,
         "w": 452,
+        "h": 82
+    },
+    {
+        "id": "62dc588bb013aa5d",
+        "type": "group",
+        "z": "d3bafc4d888d1327",
+        "name": "Envio de data a la planta",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "a9b25d76b4eeed82",
+            "ba79d5ef72158e38",
+            "fc59d02bacf07647",
+            "4beb840456cd2fe7"
+        ],
+        "x": 44,
+        "y": 479,
+        "w": 882,
         "h": 82
     },
     {
@@ -690,7 +709,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 590,
+        "x": 610,
         "y": 320,
         "wires": [
             []
@@ -709,7 +728,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 380,
+        "x": 400,
         "y": 320,
         "wires": [
             [
@@ -729,7 +748,7 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "x": 120,
+        "x": 140,
         "y": 320,
         "wires": [
             []
@@ -748,7 +767,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 250,
+        "x": 270,
         "y": 320,
         "wires": [
             [
@@ -801,45 +820,81 @@
         "id": "a9b25d76b4eeed82",
         "type": "function",
         "z": "d3bafc4d888d1327",
-        "name": "function 3",
-        "func": "\nreturn msg;",
+        "g": "62dc588bb013aa5d",
+        "name": "timmer",
+        "func": "var ctr = context.get('ctr','memoryOnly')||0;\nctr++;\nif(ctr > 10){\n    ctr = 0;\n}\nnode.status({fill:\"red\",shape:\"ring\",text:\"ctr \" + ctr});\ncontext.set('ctr',ctr,'memoryOnly');\nmsg.contador = ctr;\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 320,
-        "y": 580,
+        "x": 270,
+        "y": 520,
         "wires": [
-            []
+            [
+                "4beb840456cd2fe7"
+            ]
         ]
     },
     {
         "id": "ba79d5ef72158e38",
         "type": "inject",
         "z": "d3bafc4d888d1327",
+        "g": "62dc588bb013aa5d",
         "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
+        "props": [],
         "repeat": "1",
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 120,
-        "y": 580,
+        "x": 140,
+        "y": 520,
         "wires": [
-            []
+            [
+                "a9b25d76b4eeed82"
+            ]
+        ]
+    },
+    {
+        "id": "fc59d02bacf07647",
+        "type": "mqtt out",
+        "z": "d3bafc4d888d1327",
+        "g": "62dc588bb013aa5d",
+        "name": "",
+        "topic": "device/MQTTBroker/entradaNUBE",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "eb8f10b9cdca97c8",
+        "x": 760,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "4beb840456cd2fe7",
+        "type": "function",
+        "z": "d3bafc4d888d1327",
+        "g": "62dc588bb013aa5d",
+        "name": "Estructurar Mensaje de salida",
+        "func": "// adquision de variables globales\nvar presion = global.get('presion')||0;\nvar setPoint_Presion = global.get('setPoint_Presion')||0;\nvar ctr = msg.contador;\n\nmsg = {\n    'payload':{\n        ctr\n    }\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 520,
+        "wires": [
+            [
+                "fc59d02bacf07647"
+            ]
         ]
     }
 ]
