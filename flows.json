@@ -72,6 +72,23 @@
         "h": 82
     },
     {
+        "id": "4e57a0a57a801556",
+        "type": "group",
+        "z": "d3bafc4d888d1327",
+        "name": "Recepcion de data de la planta local",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "a8452f7ddd355a29",
+            "cc2c3f3fd77a1d63"
+        ],
+        "x": 34,
+        "y": 379,
+        "w": 452,
+        "h": 82
+    },
+    {
         "id": "83028f5fc4af6c91",
         "type": "ui_base",
         "theme": {
@@ -743,6 +760,7 @@
         "id": "a8452f7ddd355a29",
         "type": "mqtt in",
         "z": "d3bafc4d888d1327",
+        "g": "4e57a0a57a801556",
         "name": "",
         "topic": "device/MQTTBroker/entrada",
         "qos": "0",
@@ -752,8 +770,8 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 360,
-        "y": 440,
+        "x": 180,
+        "y": 420,
         "wires": [
             [
                 "cc2c3f3fd77a1d63"
@@ -764,6 +782,7 @@
         "id": "cc2c3f3fd77a1d63",
         "type": "function",
         "z": "d3bafc4d888d1327",
+        "g": "4e57a0a57a801556",
         "name": "Save Data",
         "func": "var data = msg;\nvar presion = data.payload.presion;\nnode.status({fill:\"blue\",shape:\"dot\",text:\"presion \" + presion});\n//Guardar la presion\nglobal.set('presion',presion);\nglobal.set('setPoint_Presion',data.payload.setPoint_Presion);\ncontext.set('monitoreo',data,'memoryOnly');\nreturn msg;",
         "outputs": 1,
@@ -772,8 +791,53 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 570,
-        "y": 440,
+        "x": 390,
+        "y": 420,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a9b25d76b4eeed82",
+        "type": "function",
+        "z": "d3bafc4d888d1327",
+        "name": "function 3",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ba79d5ef72158e38",
+        "type": "inject",
+        "z": "d3bafc4d888d1327",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 580,
         "wires": [
             []
         ]
