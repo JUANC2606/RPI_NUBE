@@ -64,12 +64,11 @@
             "dba342f4.8c29e",
             "1d0ad6849f56b3db",
             "822289ee0d9e21b6",
-            "a8ba34796b55aa64",
             "1cf6a8bfce54fbe5"
         ],
         "x": 24,
         "y": 279,
-        "w": 802,
+        "w": 642,
         "h": 82
     },
     {
@@ -210,7 +209,7 @@
         "className": ""
     },
     {
-        "id": "a6eb8721741008d0",
+        "id": "2a3d1d56311d58f2",
         "type": "tls-config",
         "name": "",
         "cert": "",
@@ -222,6 +221,52 @@
         "servername": "",
         "verifyservercert": true,
         "alpnprotocol": ""
+    },
+    {
+        "id": "352b6284259e8eec",
+        "type": "tls-config",
+        "name": "",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "b0b5f6d17e4ee7ed2f3d765054e8785e02f5583d8b130eef6e704d8fd403d4ae-certificate.pem.crt",
+        "keyname": "b0b5f6d17e4ee7ed2f3d765054e8785e02f5583d8b130eef6e704d8fd403d4ae-private.pem.key",
+        "caname": "AmazonRootCA1.pem",
+        "servername": "",
+        "verifyservercert": true,
+        "alpnprotocol": ""
+    },
+    {
+        "id": "eb8f10b9cdca97c8",
+        "type": "mqtt-broker",
+        "name": "MQTT",
+        "broker": "a2jc4862ggr0zs-ats.iot.us-east-2.amazonaws.com",
+        "port": "8883",
+        "tls": "352b6284259e8eec",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": true,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
     },
     {
         "id": "2cc3886a218bfd36",
@@ -241,7 +286,7 @@
         "nodata": "",
         "dot": false,
         "ymin": "0",
-        "ymax": "1",
+        "ymax": "300",
         "removeOlder": "1",
         "removeOlderPoints": "200",
         "removeOlderUnit": "60",
@@ -628,12 +673,10 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 530,
+        "x": 590,
         "y": 320,
         "wires": [
-            [
-                "a8ba34796b55aa64"
-            ]
+            []
         ]
     },
     {
@@ -672,35 +715,6 @@
         "x": 120,
         "y": 320,
         "wires": [
-            [
-                "1cf6a8bfce54fbe5"
-            ]
-        ]
-    },
-    {
-        "id": "a8ba34796b55aa64",
-        "type": "change",
-        "z": "d3bafc4d888d1327",
-        "g": "db0763cc983c9bdb",
-        "name": "presion",
-        "rules": [
-            {
-                "t": "set",
-                "p": "presion",
-                "pt": "global",
-                "to": "payload",
-                "tot": "msg",
-                "dc": true
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 740,
-        "y": 320,
-        "wires": [
             []
         ]
     },
@@ -723,6 +737,45 @@
             [
                 "1d0ad6849f56b3db"
             ]
+        ]
+    },
+    {
+        "id": "a8452f7ddd355a29",
+        "type": "mqtt in",
+        "z": "d3bafc4d888d1327",
+        "name": "",
+        "topic": "device/MQTTBroker/entrada",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "eb8f10b9cdca97c8",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 360,
+        "y": 440,
+        "wires": [
+            [
+                "cc2c3f3fd77a1d63"
+            ]
+        ]
+    },
+    {
+        "id": "cc2c3f3fd77a1d63",
+        "type": "function",
+        "z": "d3bafc4d888d1327",
+        "name": "Save Data",
+        "func": "var data = msg;\nvar presion = data.payload.presion;\nnode.status({fill:\"blue\",shape:\"dot\",text:\"presion \" + presion});\n//Guardar la presion\nglobal.set('presion',presion);\nglobal.set('setPoint_Presion',data.payload.setPoint_Presion);\ncontext.set('monitoreo',data,'memoryOnly');\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 570,
+        "y": 440,
+        "wires": [
+            []
         ]
     }
 ]
