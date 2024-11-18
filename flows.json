@@ -11,6 +11,7 @@
         "id": "e80ba914f330e4bf",
         "type": "group",
         "z": "d3bafc4d888d1327",
+        "g": "8fc41476708e6ab9",
         "name": "Ingreso de Datos HMI",
         "style": {
             "label": true
@@ -24,17 +25,21 @@
             "43afa594f96c4de1",
             "b31d9258d5457c6b",
             "d01294d76e015e0e",
-            "2597d26d4122589d"
+            "2597d26d4122589d",
+            "29fa82f774db68c4",
+            "c8f872af3db7a8f5",
+            "fa81248d96351f6e"
         ],
-        "x": 14,
-        "y": 19,
+        "x": 114,
+        "y": 119,
         "w": 842,
-        "h": 242
+        "h": 282
     },
     {
         "id": "214bb5bb7c3c748a",
         "type": "group",
         "z": "d3bafc4d888d1327",
+        "g": "8fc41476708e6ab9",
         "name": "Grafica de Tendencia",
         "style": {
             "label": true
@@ -47,8 +52,8 @@
             "b577870f2cd9ac34",
             "b1fa050b3d65483f"
         ],
-        "x": 874,
-        "y": 19,
+        "x": 974,
+        "y": 119,
         "w": 572,
         "h": 182
     },
@@ -66,15 +71,16 @@
             "822289ee0d9e21b6",
             "1cf6a8bfce54fbe5"
         ],
-        "x": 44,
-        "y": 279,
-        "w": 642,
+        "x": 94,
+        "y": 439,
+        "w": 672,
         "h": 82
     },
     {
         "id": "4e57a0a57a801556",
         "type": "group",
         "z": "d3bafc4d888d1327",
+        "g": "22f4050f4f87f395",
         "name": "Recepcion de data de la planta local",
         "style": {
             "label": true
@@ -83,8 +89,8 @@
             "a8452f7ddd355a29",
             "cc2c3f3fd77a1d63"
         ],
-        "x": 34,
-        "y": 379,
+        "x": 114,
+        "y": 579,
         "w": 452,
         "h": 82
     },
@@ -92,6 +98,7 @@
         "id": "62dc588bb013aa5d",
         "type": "group",
         "z": "d3bafc4d888d1327",
+        "g": "22f4050f4f87f395",
         "name": "Envio de data a la planta",
         "style": {
             "label": true
@@ -103,10 +110,44 @@
             "4beb840456cd2fe7",
             "26b63247279de23d"
         ],
-        "x": 44,
-        "y": 479,
+        "x": 584,
+        "y": 579,
         "w": 882,
         "h": 142
+    },
+    {
+        "id": "8fc41476708e6ab9",
+        "type": "group",
+        "z": "d3bafc4d888d1327",
+        "name": "Parte Grafica",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "214bb5bb7c3c748a",
+            "e80ba914f330e4bf"
+        ],
+        "x": 88,
+        "y": 93,
+        "w": 1484,
+        "h": 334
+    },
+    {
+        "id": "22f4050f4f87f395",
+        "type": "group",
+        "z": "d3bafc4d888d1327",
+        "name": "Procolo MQTT",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "4e57a0a57a801556",
+            "62dc588bb013aa5d"
+        ],
+        "x": 88,
+        "y": 553,
+        "w": 1404,
+        "h": 194
     },
     {
         "id": "83028f5fc4af6c91",
@@ -115,7 +156,7 @@
             "name": "theme-light",
             "lightTheme": {
                 "default": "#0094CE",
-                "baseColor": "#0094CE",
+                "baseColor": "#ff0000",
                 "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
                 "edited": true,
                 "reset": false
@@ -135,11 +176,11 @@
             "themeState": {
                 "base-color": {
                     "default": "#0094CE",
-                    "value": "#0094CE",
-                    "edited": false
+                    "value": "#ff0000",
+                    "edited": true
                 },
                 "page-titlebar-backgroundColor": {
-                    "value": "#0094CE",
+                    "value": "#ff0000",
                     "edited": false
                 },
                 "page-backgroundColor": {
@@ -151,7 +192,7 @@
                     "edited": false
                 },
                 "group-textColor": {
-                    "value": "#1bbfff",
+                    "value": "#ff4d4d",
                     "edited": false
                 },
                 "group-borderColor": {
@@ -167,7 +208,7 @@
                     "edited": false
                 },
                 "widget-backgroundColor": {
-                    "value": "#0094ce",
+                    "value": "#ff0000",
                     "edited": false
                 },
                 "widget-borderColor": {
@@ -224,40 +265,15 @@
         "hidden": false
     },
     {
-        "id": "d5468e5220cc968f",
-        "type": "ui_group",
-        "name": "Pantalla",
-        "tab": "0babc20c7149c07a",
-        "order": 1,
-        "disp": false,
-        "width": "12",
-        "collapse": false,
-        "className": ""
-    },
-    {
         "id": "88cb12c1a31a6f43",
         "type": "ui_group",
         "name": "Pantalla",
         "tab": "5aaaf04bcb7e61c3",
         "order": 1,
         "disp": true,
-        "width": "6",
+        "width": "12",
         "collapse": false,
         "className": ""
-    },
-    {
-        "id": "2a3d1d56311d58f2",
-        "type": "tls-config",
-        "name": "",
-        "cert": "",
-        "key": "",
-        "ca": "",
-        "certname": "b0b5f6d17e4ee7ed2f3d765054e8785e02f5583d8b130eef6e704d8fd403d4ae-certificate.pem.crt",
-        "keyname": "b0b5f6d17e4ee7ed2f3d765054e8785e02f5583d8b130eef6e704d8fd403d4ae-private.pem.key",
-        "caname": "AmazonRootCA1.pem",
-        "servername": "",
-        "verifyservercert": true,
-        "alpnprotocol": ""
     },
     {
         "id": "352b6284259e8eec",
@@ -306,6 +322,17 @@
         "sessionExpiry": ""
     },
     {
+        "id": "7cf2f1d315444443",
+        "type": "ui_group",
+        "name": "Configuracion",
+        "tab": "5aaaf04bcb7e61c3",
+        "order": 2,
+        "disp": false,
+        "width": "12",
+        "collapse": false,
+        "className": ""
+    },
+    {
         "id": "2cc3886a218bfd36",
         "type": "ui_chart",
         "z": "d3bafc4d888d1327",
@@ -344,8 +371,8 @@
         "outputs": 1,
         "useDifferentColor": false,
         "className": "",
-        "x": 1350,
-        "y": 120,
+        "x": 1450,
+        "y": 220,
         "wires": [
             []
         ]
@@ -363,8 +390,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1180,
-        "y": 160,
+        "x": 1280,
+        "y": 260,
         "wires": [
             [
                 "2cc3886a218bfd36"
@@ -383,8 +410,8 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "x": 1030,
-        "y": 120,
+        "x": 1130,
+        "y": 220,
         "wires": [
             [
                 "bacdb831509bd076"
@@ -404,8 +431,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1200,
-        "y": 60,
+        "x": 1300,
+        "y": 160,
         "wires": [
             [
                 "2cc3886a218bfd36"
@@ -427,8 +454,8 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "x": 1030,
-        "y": 60,
+        "x": 1130,
+        "y": 160,
         "wires": [
             [
                 "86657a338622ef8d"
@@ -456,8 +483,8 @@
         "payloadType": "str",
         "topic": "topic",
         "topicType": "msg",
-        "x": 990,
-        "y": 160,
+        "x": 1090,
+        "y": 260,
         "wires": [
             [
                 "bacdb831509bd076"
@@ -472,7 +499,7 @@
         "name": "",
         "label": "SetPoint de Presión",
         "tooltip": "",
-        "group": "d5468e5220cc968f",
+        "group": "7cf2f1d315444443",
         "order": 1,
         "width": 0,
         "height": 0,
@@ -484,8 +511,8 @@
         "max": "1",
         "step": "0.1",
         "className": "",
-        "x": 420,
-        "y": 60,
+        "x": 520,
+        "y": 160,
         "wires": [
             [
                 "9837c6631b22c877",
@@ -499,7 +526,7 @@
         "z": "d3bafc4d888d1327",
         "g": "e80ba914f330e4bf",
         "name": "",
-        "group": "d5468e5220cc968f",
+        "group": "7cf2f1d315444443",
         "order": 3,
         "width": 0,
         "height": 0,
@@ -514,8 +541,8 @@
         "payloadType": "str",
         "topic": "topic",
         "topicType": "msg",
-        "x": 380,
-        "y": 140,
+        "x": 480,
+        "y": 240,
         "wires": [
             [
                 "43afa594f96c4de1",
@@ -529,7 +556,7 @@
         "z": "d3bafc4d888d1327",
         "g": "e80ba914f330e4bf",
         "name": "",
-        "group": "d5468e5220cc968f",
+        "group": "7cf2f1d315444443",
         "order": 4,
         "width": 0,
         "height": 0,
@@ -544,8 +571,8 @@
         "payloadType": "str",
         "topic": "topic",
         "topicType": "msg",
-        "x": 380,
-        "y": 180,
+        "x": 480,
+        "y": 280,
         "wires": [
             [
                 "b31d9258d5457c6b"
@@ -564,8 +591,8 @@
         "once": true,
         "onceDelay": "1",
         "topic": "",
-        "x": 150,
-        "y": 180,
+        "x": 250,
+        "y": 280,
         "wires": [
             [
                 "2597d26d4122589d",
@@ -586,8 +613,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 400,
-        "y": 220,
+        "x": 500,
+        "y": 320,
         "wires": [
             []
         ]
@@ -613,8 +640,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 690,
-        "y": 60,
+        "x": 790,
+        "y": 160,
         "wires": [
             []
         ]
@@ -624,7 +651,7 @@
         "type": "ui_text",
         "z": "d3bafc4d888d1327",
         "g": "e80ba914f330e4bf",
-        "group": "d5468e5220cc968f",
+        "group": "7cf2f1d315444443",
         "order": 2,
         "width": 0,
         "height": 0,
@@ -637,8 +664,8 @@
         "font": "",
         "fontSize": 16,
         "color": "#000000",
-        "x": 610,
-        "y": 100,
+        "x": 710,
+        "y": 200,
         "wires": []
     },
     {
@@ -662,8 +689,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 580,
-        "y": 140,
+        "x": 680,
+        "y": 240,
         "wires": [
             []
         ]
@@ -689,8 +716,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 220,
-        "y": 60,
+        "x": 320,
+        "y": 160,
         "wires": [
             [
                 "6affae2739636fd4"
@@ -710,8 +737,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 610,
-        "y": 320,
+        "x": 690,
+        "y": 480,
         "wires": [
             []
         ]
@@ -729,8 +756,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 400,
-        "y": 320,
+        "x": 480,
+        "y": 480,
         "wires": [
             [
                 "dba342f4.8c29e"
@@ -749,8 +776,8 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "x": 140,
-        "y": 320,
+        "x": 190,
+        "y": 480,
         "wires": [
             []
         ]
@@ -768,8 +795,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 270,
-        "y": 320,
+        "x": 330,
+        "y": 480,
         "wires": [
             [
                 "1d0ad6849f56b3db"
@@ -790,8 +817,8 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 180,
-        "y": 420,
+        "x": 260,
+        "y": 620,
         "wires": [
             [
                 "cc2c3f3fd77a1d63"
@@ -811,8 +838,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 390,
-        "y": 420,
+        "x": 470,
+        "y": 620,
         "wires": [
             []
         ]
@@ -830,8 +857,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 270,
-        "y": 520,
+        "x": 810,
+        "y": 620,
         "wires": [
             [
                 "4beb840456cd2fe7"
@@ -850,8 +877,8 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "x": 140,
-        "y": 520,
+        "x": 680,
+        "y": 620,
         "wires": [
             [
                 "a9b25d76b4eeed82",
@@ -874,8 +901,8 @@
         "correl": "",
         "expiry": "",
         "broker": "eb8f10b9cdca97c8",
-        "x": 760,
-        "y": 520,
+        "x": 1300,
+        "y": 620,
         "wires": []
     },
     {
@@ -891,8 +918,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 470,
-        "y": 520,
+        "x": 1010,
+        "y": 620,
         "wires": [
             [
                 "fc59d02bacf07647"
@@ -912,10 +939,83 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 320,
-        "y": 580,
+        "x": 860,
+        "y": 680,
         "wires": [
             []
         ]
+    },
+    {
+        "id": "29fa82f774db68c4",
+        "type": "inject",
+        "z": "d3bafc4d888d1327",
+        "g": "e80ba914f330e4bf",
+        "name": "",
+        "props": [],
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 290,
+        "y": 360,
+        "wires": [
+            [
+                "c8f872af3db7a8f5"
+            ]
+        ]
+    },
+    {
+        "id": "c8f872af3db7a8f5",
+        "type": "function",
+        "z": "d3bafc4d888d1327",
+        "g": "e80ba914f330e4bf",
+        "name": "function 3",
+        "func": "var statusServerLocal = global.get('statusServerLocal','memoryOnly')||false;\nmsg.payload = statusServerLocal;\nvar color = 'red';\nif(statusServerLocal == true){\n    color = 'green';\n}\nnode.status({fill:color,shape:\"ring\",text:\"Server \" + statusServerLocal});\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 360,
+        "wires": [
+            [
+                "fa81248d96351f6e"
+            ]
+        ]
+    },
+    {
+        "id": "fa81248d96351f6e",
+        "type": "ui_led",
+        "z": "d3bafc4d888d1327",
+        "g": "e80ba914f330e4bf",
+        "order": 4,
+        "group": "7cf2f1d315444443",
+        "width": 0,
+        "height": 0,
+        "label": "Status Planta Local",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#ff0000",
+                "value": "false",
+                "valueType": "bool"
+            },
+            {
+                "color": "#008000",
+                "value": "true",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "",
+        "x": 550,
+        "y": 360,
+        "wires": []
     }
 ]
