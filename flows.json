@@ -100,12 +100,13 @@
             "a9b25d76b4eeed82",
             "ba79d5ef72158e38",
             "fc59d02bacf07647",
-            "4beb840456cd2fe7"
+            "4beb840456cd2fe7",
+            "26b63247279de23d"
         ],
         "x": 44,
         "y": 479,
         "w": 882,
-        "h": 82
+        "h": 142
     },
     {
         "id": "83028f5fc4af6c91",
@@ -803,7 +804,7 @@
         "z": "d3bafc4d888d1327",
         "g": "4e57a0a57a801556",
         "name": "Save Data",
-        "func": "var data = msg;\nvar presion = data.payload.presion;\nnode.status({fill:\"blue\",shape:\"dot\",text:\"presion \" + presion});\n//Guardar la presion\nglobal.set('presion',presion);\nglobal.set('setPoint_Presion',data.payload.setPoint_Presion);\ncontext.set('monitoreo',data,'memoryOnly');\nreturn msg;",
+        "func": "var data = msg;\nvar presion = data.payload.presion;\nvar setPoint_Presion = data.payload.setPoint_Presion;\nvar ctrPlanta = data.payload.ctr;\nnode.status({fill:\"blue\",shape:\"dot\",text:\"presion \" + presion});\n//Guardar la presion\nglobal.set('presion',presion);\nglobal.set('setPoint_Presion',setPoint_Presion);\nglobal.set('ctrPlanta',ctrPlanta);\ncontext.set('monitoreo',data,'memoryOnly');\nreturn msg;\n",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -853,7 +854,8 @@
         "y": 520,
         "wires": [
             [
-                "a9b25d76b4eeed82"
+                "a9b25d76b4eeed82",
+                "26b63247279de23d"
             ]
         ]
     },
@@ -895,6 +897,25 @@
             [
                 "fc59d02bacf07647"
             ]
+        ]
+    },
+    {
+        "id": "26b63247279de23d",
+        "type": "function",
+        "z": "d3bafc4d888d1327",
+        "g": "62dc588bb013aa5d",
+        "name": "Status Server Local",
+        "func": "//adquision del valor de contador\nvar ctr = global.get('ctrPlanta') || 0;\nvar ctr1 = context.get('ctr1')||0;\nvar ctr2 = context.get('ctr2')||0;\nvar ctr3 = context.get('ctr3')||0;\nvar statusServer = false;\n\n// identificacion de status del servidor\nif (ctr != ctr1 && ctr != ctr2 && ctr != ctr3){\n    statusServer = true;\n}\n\n//condiciones del colore\nvar color = 'red';\nif(statusServer){\n    color = 'green';\n}\n\n\nnode.status({ fill: color, shape: \"ring\", text: ' status Server ' + statusServer + \" ctr \" + ctr });\n// guardando los estados anteriores\ncontext.set('ctr3',ctr2);\ncontext.set('ctr2',ctr1);\ncontext.set('ctr1',ctr);\n//guardando el estado de status server\nglobal.set('statusServerLocal',statusServer,'memoryOnly');\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 580,
+        "wires": [
+            []
         ]
     }
 ]
