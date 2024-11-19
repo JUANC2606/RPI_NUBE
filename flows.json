@@ -8,6 +8,59 @@
         "env": []
     },
     {
+        "id": "db0763cc983c9bdb",
+        "type": "group",
+        "z": "d3bafc4d888d1327",
+        "name": "Lazo de Control PID",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "dba342f4.8c29e",
+            "1d0ad6849f56b3db",
+            "822289ee0d9e21b6",
+            "1cf6a8bfce54fbe5"
+        ],
+        "x": 94,
+        "y": 439,
+        "w": 672,
+        "h": 82
+    },
+    {
+        "id": "8fc41476708e6ab9",
+        "type": "group",
+        "z": "d3bafc4d888d1327",
+        "name": "Parte Grafica",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "214bb5bb7c3c748a",
+            "e80ba914f330e4bf"
+        ],
+        "x": 88,
+        "y": 93,
+        "w": 1484,
+        "h": 334
+    },
+    {
+        "id": "22f4050f4f87f395",
+        "type": "group",
+        "z": "d3bafc4d888d1327",
+        "name": "Procolo MQTT",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "4e57a0a57a801556",
+            "62dc588bb013aa5d"
+        ],
+        "x": 88,
+        "y": 553,
+        "w": 1404,
+        "h": 194
+    },
+    {
         "id": "e80ba914f330e4bf",
         "type": "group",
         "z": "d3bafc4d888d1327",
@@ -32,7 +85,7 @@
         ],
         "x": 114,
         "y": 119,
-        "w": 842,
+        "w": 852,
         "h": 282
     },
     {
@@ -56,25 +109,6 @@
         "y": 119,
         "w": 572,
         "h": 182
-    },
-    {
-        "id": "db0763cc983c9bdb",
-        "type": "group",
-        "z": "d3bafc4d888d1327",
-        "name": "Lazo de Control PID",
-        "style": {
-            "label": true
-        },
-        "nodes": [
-            "dba342f4.8c29e",
-            "1d0ad6849f56b3db",
-            "822289ee0d9e21b6",
-            "1cf6a8bfce54fbe5"
-        ],
-        "x": 94,
-        "y": 439,
-        "w": 672,
-        "h": 82
     },
     {
         "id": "4e57a0a57a801556",
@@ -114,40 +148,6 @@
         "y": 579,
         "w": 882,
         "h": 142
-    },
-    {
-        "id": "8fc41476708e6ab9",
-        "type": "group",
-        "z": "d3bafc4d888d1327",
-        "name": "Parte Grafica",
-        "style": {
-            "label": true
-        },
-        "nodes": [
-            "214bb5bb7c3c748a",
-            "e80ba914f330e4bf"
-        ],
-        "x": 88,
-        "y": 93,
-        "w": 1484,
-        "h": 334
-    },
-    {
-        "id": "22f4050f4f87f395",
-        "type": "group",
-        "z": "d3bafc4d888d1327",
-        "name": "Procolo MQTT",
-        "style": {
-            "label": true
-        },
-        "nodes": [
-            "4e57a0a57a801556",
-            "62dc588bb013aa5d"
-        ],
-        "x": 88,
-        "y": 553,
-        "w": 1404,
-        "h": 194
     },
     {
         "id": "83028f5fc4af6c91",
@@ -507,9 +507,9 @@
         "outs": "all",
         "topic": "topic",
         "topicType": "msg",
-        "min": 0,
-        "max": "1",
-        "step": "0.1",
+        "min": "100",
+        "max": "400",
+        "step": "1",
         "className": "",
         "x": 520,
         "y": 160,
