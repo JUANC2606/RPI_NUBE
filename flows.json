@@ -16,14 +16,13 @@
             "label": true
         },
         "nodes": [
-            "dba342f4.8c29e",
-            "1d0ad6849f56b3db",
             "822289ee0d9e21b6",
-            "1cf6a8bfce54fbe5"
+            "7bdac0345f2d726d",
+            "0912cbf3f6e7f16c"
         ],
         "x": 94,
-        "y": 439,
-        "w": 672,
+        "y": 519,
+        "w": 492,
         "h": 82
     },
     {
@@ -41,7 +40,7 @@
         "x": 88,
         "y": 93,
         "w": 1484,
-        "h": 334
+        "h": 394
     },
     {
         "id": "22f4050f4f87f395",
@@ -56,7 +55,7 @@
             "62dc588bb013aa5d"
         ],
         "x": 88,
-        "y": 553,
+        "y": 633,
         "w": 1404,
         "h": 194
     },
@@ -81,12 +80,14 @@
             "2597d26d4122589d",
             "29fa82f774db68c4",
             "c8f872af3db7a8f5",
-            "fa81248d96351f6e"
+            "fa81248d96351f6e",
+            "95a8a0804d8c6bae",
+            "432170e61949389b"
         ],
         "x": 114,
         "y": 119,
         "w": 852,
-        "h": 282
+        "h": 342
     },
     {
         "id": "214bb5bb7c3c748a",
@@ -124,7 +125,7 @@
             "cc2c3f3fd77a1d63"
         ],
         "x": 114,
-        "y": 579,
+        "y": 659,
         "w": 452,
         "h": 82
     },
@@ -142,11 +143,12 @@
             "ba79d5ef72158e38",
             "fc59d02bacf07647",
             "4beb840456cd2fe7",
-            "26b63247279de23d"
+            "26b63247279de23d",
+            "14cbb479b11965bc"
         ],
-        "x": 584,
-        "y": 579,
-        "w": 882,
+        "x": 574,
+        "y": 659,
+        "w": 892,
         "h": 142
     },
     {
@@ -252,15 +254,6 @@
         "name": "Principal",
         "icon": "dashboard",
         "order": 1,
-        "disabled": false,
-        "hidden": false
-    },
-    {
-        "id": "0babc20c7149c07a",
-        "type": "ui_tab",
-        "name": "Configuracion",
-        "icon": "dashboard",
-        "order": 2,
         "disabled": false,
         "hidden": false
     },
@@ -725,81 +718,22 @@
         ]
     },
     {
-        "id": "dba342f4.8c29e",
-        "type": "function",
-        "z": "d3bafc4d888d1327",
-        "g": "db0763cc983c9bdb",
-        "name": "plant",
-        "func": "var entrada = msg.payload;//Entrada del control\nvar salida_anterior = context.get(\"salida_ant\")||0;\nvar salida = context.get(\"salida\")||0;\nvar Theta = 0.349066; //% 20 grados \nvar pi = 3.1416;\nvar p = 62.43 ;\nvar Ts = 0.1 ;\nvar Cd = 0.6;\nvar L = 0.328084 ; // %ft o 10 cm\nvar R = 0.019685/2 ; //%D = 6.25 mm \nvar g = 32.16;\nvar h_bar = 0.4; //%ft\nvar Ao = pi*R^2;\n//var qmi = p*Cd*Ao*Math.pow(2*g*h_bar, 0.5); // ft^3/s flujo volumetrico\nvar qmi = 0.0578; // ft^3/s flujo volumetrico\n//var k2 = Cd*Ao*Math.pow(2*g,0.5);\nvar k2 = 0.0015;\nvar k1 = 2*L*Math.tan(Theta);\nif(salida>0)\n{\n    salida =  ( salida_anterior+(Ts)*(entrada/p -k2*(salida_anterior))/(k1*salida_anterior));\n    salida = redondearADecimales(salida);\n    if(salida>1){\n        salida = 1;\n        }\n        else if(salida<=0){\n            salida = 0.01;\n        }\n        \n    context.set(\"salida\", salida);\n    context.set(\"salida_ant\", salida);\n    msg.payload = salida ; // show lv tank  \n    node.status({fill:\"blue\",shape:\"dot\",text:\"presion \" + salida});\n}\nreturn msg;\n\nfunction redondearADecimales(valor) {\n    // Verificar si el valor es numérico\n    if (typeof valor === 'number' && !isNaN(valor)) {\n        // Redondear el valor a 3 decimales\n        return parseFloat(valor.toFixed(3));\n    } else {\n        // Devolver 0 si el valor no es numérico\n        return 0;\n    }\n}",
-        "outputs": 1,
-        "timeout": "",
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 690,
-        "y": 480,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "1d0ad6849f56b3db",
-        "type": "function",
-        "z": "d3bafc4d888d1327",
-        "g": "db0763cc983c9bdb",
-        "name": "controller",
-        "func": "var err = msg.payload ;//error\nvar err_ant = context.get(\"err_ant\")||0;//error -1\nvar out_ant = context.get(\"ctr_ant\")||0;//controller -1\n\nvar ctr = 0;\nvar a0 = 1;\nvar a1 = 0;\nvar b0 = 5;\nvar b1 = 0.049651*5;\nvar T = 0.1;\nvar k_t = 2/T;\nvar aux_1 = (b0*k_t+b1)/(a0*k_t+a1);\nvar aux_2 = (-b0*k_t+b1)/(a0*k_t+a1);\nvar aux_3 = (-a0*k_t+a1)/(a0*k_t+a1);\n//% Variables Controlador PI\n//%           5(s+0.049651)\n//%  C(s) = ------------------\n//%                 s\n\nctr = (4.9443*err-4.7499*err_ant) + out_ant;\nctr = (aux_1 * err + aux_2*err_ant - aux_3* out_ant);//%c2d Tustin\ncontext.set(\"ctr_ant\",ctr);\ncontext.set(\"err_ant\",err);\nmsg.payload = ctr ; // show action controller\nnode.status({fill:\"red\",shape:\"ring\",text:\"ctr \"+ctr});\nreturn msg;\n",
-        "outputs": 1,
-        "timeout": "",
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 480,
-        "y": 480,
-        "wires": [
-            [
-                "dba342f4.8c29e"
-            ]
-        ]
-    },
-    {
         "id": "822289ee0d9e21b6",
         "type": "inject",
         "z": "d3bafc4d888d1327",
         "g": "db0763cc983c9bdb",
         "name": "",
         "props": [],
-        "repeat": "0.5",
+        "repeat": "1",
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
         "x": 190,
-        "y": 480,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "1cf6a8bfce54fbe5",
-        "type": "function",
-        "z": "d3bafc4d888d1327",
-        "g": "db0763cc983c9bdb",
-        "name": "error",
-        "func": "var setPoint_Presion = global.get('setPoint_Presion')||-2;\nvar presion = global.get('presion')||0;\nif(setPoint_Presion != -2){\n    // calculo del error \n    var error = setPoint_Presion - presion;\n    msg.payload = error;\n    //guardar el error en variable global\n    global.set('error',error);\n    return msg;\n}",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 330,
-        "y": 480,
+        "y": 560,
         "wires": [
             [
-                "1d0ad6849f56b3db"
+                "7bdac0345f2d726d"
             ]
         ]
     },
@@ -818,7 +752,7 @@
         "rh": 0,
         "inputs": 0,
         "x": 260,
-        "y": 620,
+        "y": 700,
         "wires": [
             [
                 "cc2c3f3fd77a1d63"
@@ -839,7 +773,7 @@
         "finalize": "",
         "libs": [],
         "x": 470,
-        "y": 620,
+        "y": 700,
         "wires": [
             []
         ]
@@ -858,7 +792,7 @@
         "finalize": "",
         "libs": [],
         "x": 810,
-        "y": 620,
+        "y": 700,
         "wires": [
             [
                 "4beb840456cd2fe7"
@@ -878,11 +812,10 @@
         "onceDelay": 0.1,
         "topic": "",
         "x": 680,
-        "y": 620,
+        "y": 700,
         "wires": [
             [
-                "a9b25d76b4eeed82",
-                "26b63247279de23d"
+                "a9b25d76b4eeed82"
             ]
         ]
     },
@@ -902,7 +835,7 @@
         "expiry": "",
         "broker": "eb8f10b9cdca97c8",
         "x": 1300,
-        "y": 620,
+        "y": 700,
         "wires": []
     },
     {
@@ -911,7 +844,7 @@
         "z": "d3bafc4d888d1327",
         "g": "62dc588bb013aa5d",
         "name": "Estructurar Mensaje de salida",
-        "func": "// adquision de variables globales\nvar presion = global.get('presion')||0;\nvar setPoint_Presion = global.get('setPoint_Presion')||0;\nvar ctr = msg.contador;\n\nmsg = {\n    'payload':{\n        ctr\n    }\n}\nreturn msg;",
+        "func": "// adquision de variables globales\nvar presion = global.get('presion')||0;\nvar SalidaPID = global.get('SalidaPID','memoryOnly')||0;\nvar setPoint_Presion = global.get('setPoint_Presion')||0;\nvar ctr = msg.contador;\n\nmsg = {\n    'payload':{\n        ctr,\n        SalidaPID\n    }\n}\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -919,7 +852,7 @@
         "finalize": "",
         "libs": [],
         "x": 1010,
-        "y": 620,
+        "y": 700,
         "wires": [
             [
                 "fc59d02bacf07647"
@@ -940,7 +873,7 @@
         "finalize": "",
         "libs": [],
         "x": 860,
-        "y": 680,
+        "y": 760,
         "wires": [
             []
         ]
@@ -961,7 +894,8 @@
         "y": 360,
         "wires": [
             [
-                "c8f872af3db7a8f5"
+                "c8f872af3db7a8f5",
+                "432170e61949389b"
             ]
         ]
     },
@@ -1016,6 +950,107 @@
         "name": "",
         "x": 550,
         "y": 360,
+        "wires": []
+    },
+    {
+        "id": "7bdac0345f2d726d",
+        "type": "function",
+        "z": "d3bafc4d888d1327",
+        "g": "db0763cc983c9bdb",
+        "name": "PID",
+        "func": "// Traer los parámetros globales\nvar reference = global.get('setPoint_Presion') || 0;  // Valor deseado (referencia)\nvar output = global.get('presion') || 0;  // Salida actual del sistema\n\n// Traer los parámetros anteriores\nvar uk = Math.abs(reference - output);  // Error actual\nvar uk1 = flow.get('uk1') || 0;  // Error anterior\nvar yk = 0;  // Salida actual\nvar yk1 = flow.get('yk1') || 0;  // Salida anterior\n\n// Parámetros del controlador PI\nvar Kp = 1.81e-6;  // Ganancia proporcional\nvar Ki = 1.24e-6;  // Ganancia integral\nvar T = 1;  // Tiempo de muestreo (s)\n\n// Término proporcional\nvar b0_p = Kp;\n\n// Término integral\nvar b0_i = Ki * T / 2;\nvar b1_i = Ki * T / 2;\n\n// Calcular las salidas del controlador\n// Proporcional\nvar y_p = b0_p * uk;\n\n// Integral\nvar y_i = b0_i * uk + b1_i * uk1 + yk1;\n\n// Salida total del PI\nyk = y_p + y_i;\n\n// Actualizar el mensaje\nmsg.payload = yk;\n\n// Visualización en el nodo\nnode.status({ fill: \"green\", shape: \"dot\", text: \"PI Output: \" + yk });\n\n// Almacenar las variables necesarias para la próxima iteración\nflow.set('yk1', yk);  // Guardar salida anterior\nflow.set('uk1', uk);  // Guardar error anterior\n\n// Guardar los coeficientes y monitoreo para depuración\ncontext.set('monitoreo', { \n    ctsProporcional: { b0_p }, \n    ctsIntegrales: { b0_i, b1_i } \n}, 'memoryOnly');\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 560,
+        "wires": [
+            [
+                "0912cbf3f6e7f16c"
+            ]
+        ]
+    },
+    {
+        "id": "95a8a0804d8c6bae",
+        "type": "ui_text",
+        "z": "d3bafc4d888d1327",
+        "g": "e80ba914f330e4bf",
+        "group": "7cf2f1d315444443",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Presion",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 620,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "432170e61949389b",
+        "type": "function",
+        "z": "d3bafc4d888d1327",
+        "g": "e80ba914f330e4bf",
+        "name": "Adquirir Presion",
+        "func": "var presion = global.get('presion')||0;\nmsg.payload = presion;\nnode.status({fill:\"red\",shape:\"ring\",text:presion +\" psi\"});;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 420,
+        "wires": [
+            [
+                "95a8a0804d8c6bae"
+            ]
+        ]
+    },
+    {
+        "id": "14cbb479b11965bc",
+        "type": "inject",
+        "z": "d3bafc4d888d1327",
+        "g": "62dc588bb013aa5d",
+        "name": "",
+        "props": [],
+        "repeat": "1.5",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 670,
+        "y": 760,
+        "wires": [
+            [
+                "26b63247279de23d"
+            ]
+        ]
+    },
+    {
+        "id": "0912cbf3f6e7f16c",
+        "type": "debug",
+        "z": "d3bafc4d888d1327",
+        "g": "db0763cc983c9bdb",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 480,
+        "y": 560,
         "wires": []
     }
 ]
