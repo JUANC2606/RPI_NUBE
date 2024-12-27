@@ -22,7 +22,7 @@
         ],
         "x": 94,
         "y": 519,
-        "w": 492,
+        "w": 772,
         "h": 82
     },
     {
@@ -957,15 +957,15 @@
         "type": "function",
         "z": "d3bafc4d888d1327",
         "g": "db0763cc983c9bdb",
-        "name": "PID",
-        "func": "// Traer los parámetros globales\nvar reference = global.get('setPoint_Presion') || 0;  // Valor deseado (referencia)\nvar output = global.get('presion') || 0;  // Salida actual del sistema\n\n// Traer los parámetros anteriores\nvar uk = Math.abs(reference - output);  // Error actual\nvar uk1 = flow.get('uk1') || 0;  // Error anterior\nvar yk = 0;  // Salida actual\nvar yk1 = flow.get('yk1') || 0;  // Salida anterior\n\n// Parámetros del controlador PI\nvar Kp = 1.81e-6;  // Ganancia proporcional\nvar Ki = 1.24e-6;  // Ganancia integral\nvar T = 1;  // Tiempo de muestreo (s)\n\n// Término proporcional\nvar b0_p = Kp;\n\n// Término integral\nvar b0_i = Ki * T / 2;\nvar b1_i = Ki * T / 2;\n\n// Calcular las salidas del controlador\n// Proporcional\nvar y_p = b0_p * uk;\n\n// Integral\nvar y_i = b0_i * uk + b1_i * uk1 + yk1;\n\n// Salida total del PI\nyk = y_p + y_i;\n\n// Actualizar el mensaje\nmsg.payload = yk;\n\n// Visualización en el nodo\nnode.status({ fill: \"green\", shape: \"dot\", text: \"PI Output: \" + yk });\n\n// Almacenar las variables necesarias para la próxima iteración\nflow.set('yk1', yk);  // Guardar salida anterior\nflow.set('uk1', uk);  // Guardar error anterior\n\n// Guardar los coeficientes y monitoreo para depuración\ncontext.set('monitoreo', { \n    ctsProporcional: { b0_p }, \n    ctsIntegrales: { b0_i, b1_i } \n}, 'memoryOnly');\n\nreturn msg;\n",
+        "name": "PI",
+        "func": "// Traer los parámetros globales\nvar reference = global.get('setPoint_Presion') || 0;  // Valor deseado (referencia)\nvar output = global.get('presion') || 0;  // Salida actual del sistema\n\n// Traer los parámetros anteriores\nvar uk = Math.abs(reference - output);  // Error actual\nvar uk1 = flow.get('uk1') || 0;  // Error anterior\nvar yk = 0;  // Salida actual\nvar yk1 = flow.get('yk1') || 0;  // Salida anterior\n\n// Parámetros del controlador PI\nvar Kp = 1.81e-6;  // Ganancia proporcional\nvar Ki = 1.24e-6;  // Ganancia integral\nvar T = 1;  // Tiempo de muestreo (s)\n\n// Término proporcional\nvar b0_p = Kp;\n\n// Término integral\nvar b0_i = Ki * T / 2;\nvar b1_i = Ki * T / 2;\n\n// Calcular las salidas del controlador\n// Proporcional\nvar y_p = b0_p * uk;\n\n// Integral\nvar y_i = b0_i * uk + b1_i * uk1 + yk1;\n\n// Salida total del PI\nyk = y_p + y_i;\n\n// Actualizar el mensaje\nmsg.payload = yk;\n\n// Visualización en el nodo\nnode.status({ fill: \"green\", shape: \"dot\", text: \"PI Output: \" + yk });\n\n// Almacenar las variables necesarias para la próxima iteración\nflow.set('yk1', yk);  // Guardar salida anterior\nflow.set('uk1', uk);  // Guardar error anterior\n\n// Guardar los coeficientes y monitoreo para depuración\ncontext.set('monitoreo', { \n    ctsProporcional: { b0_p }, \n    ctsIntegrales: { b0_i, b1_i } \n}, 'memoryOnly');\n\nreturn msg;\n\n\n",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 330,
+        "x": 430,
         "y": 560,
         "wires": [
             [
@@ -1049,8 +1049,26 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 480,
+        "x": 760,
         "y": 560,
         "wires": []
+    },
+    {
+        "id": "3419891b727602f9",
+        "type": "function",
+        "z": "d3bafc4d888d1327",
+        "name": "error",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 450,
+        "y": 980,
+        "wires": [
+            []
+        ]
     }
 ]
