@@ -18,11 +18,11 @@
         "nodes": [
             "822289ee0d9e21b6",
             "896e85c0cd803242",
-            "b000dc2b72a6640e",
-            "7bdac0345f2d726d"
+            "a5e118120cdb21e5",
+            "9743a68c22620124"
         ],
         "x": 94,
-        "y": 539,
+        "y": 519,
         "w": 892,
         "h": 82
     },
@@ -56,9 +56,26 @@
             "62dc588bb013aa5d"
         ],
         "x": 88,
-        "y": 633,
+        "y": 613,
         "w": 1444,
         "h": 194
+    },
+    {
+        "id": "94abe19cb19333f1",
+        "type": "group",
+        "z": "d3bafc4d888d1327",
+        "name": "Predefinir el tiempo de muestreo",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "c398b05cbaa4da5b",
+            "ad0b991e833b708c"
+        ],
+        "x": 84,
+        "y": 819,
+        "w": 442,
+        "h": 82
     },
     {
         "id": "e80ba914f330e4bf",
@@ -126,7 +143,7 @@
             "cc2c3f3fd77a1d63"
         ],
         "x": 114,
-        "y": 659,
+        "y": 639,
         "w": 452,
         "h": 82
     },
@@ -142,32 +159,15 @@
         "nodes": [
             "a9b25d76b4eeed82",
             "ba79d5ef72158e38",
-            "fc59d02bacf07647",
             "4beb840456cd2fe7",
             "26b63247279de23d",
-            "14cbb479b11965bc"
+            "14cbb479b11965bc",
+            "fc59d02bacf07647"
         ],
         "x": 614,
-        "y": 659,
+        "y": 639,
         "w": 892,
         "h": 142
-    },
-    {
-        "id": "94abe19cb19333f1",
-        "type": "group",
-        "z": "d3bafc4d888d1327",
-        "name": "Predefinir el tiempo de muestreo",
-        "style": {
-            "label": true
-        },
-        "nodes": [
-            "c398b05cbaa4da5b",
-            "ad0b991e833b708c"
-        ],
-        "x": 84,
-        "y": 839,
-        "w": 442,
-        "h": 82
     },
     {
         "id": "83028f5fc4af6c91",
@@ -748,7 +748,7 @@
         "onceDelay": 0.1,
         "topic": "",
         "x": 190,
-        "y": 580,
+        "y": 560,
         "wires": [
             [
                 "896e85c0cd803242"
@@ -770,7 +770,7 @@
         "rh": 0,
         "inputs": 0,
         "x": 260,
-        "y": 700,
+        "y": 680,
         "wires": [
             [
                 "cc2c3f3fd77a1d63"
@@ -791,7 +791,7 @@
         "finalize": "",
         "libs": [],
         "x": 470,
-        "y": 700,
+        "y": 680,
         "wires": [
             []
         ]
@@ -810,7 +810,7 @@
         "finalize": "",
         "libs": [],
         "x": 850,
-        "y": 700,
+        "y": 680,
         "wires": [
             [
                 "4beb840456cd2fe7"
@@ -830,31 +830,12 @@
         "onceDelay": 0.1,
         "topic": "",
         "x": 720,
-        "y": 700,
+        "y": 680,
         "wires": [
             [
                 "a9b25d76b4eeed82"
             ]
         ]
-    },
-    {
-        "id": "fc59d02bacf07647",
-        "type": "mqtt out",
-        "z": "d3bafc4d888d1327",
-        "g": "62dc588bb013aa5d",
-        "name": "",
-        "topic": "device/MQTTBroker/entradaNUBE",
-        "qos": "",
-        "retain": "",
-        "respTopic": "",
-        "contentType": "",
-        "userProps": "",
-        "correl": "",
-        "expiry": "",
-        "broker": "eb8f10b9cdca97c8",
-        "x": 1340,
-        "y": 700,
-        "wires": []
     },
     {
         "id": "4beb840456cd2fe7",
@@ -870,7 +851,7 @@
         "finalize": "",
         "libs": [],
         "x": 1050,
-        "y": 700,
+        "y": 680,
         "wires": [
             [
                 "fc59d02bacf07647"
@@ -891,7 +872,7 @@
         "finalize": "",
         "libs": [],
         "x": 900,
-        "y": 760,
+        "y": 740,
         "wires": [
             []
         ]
@@ -1026,7 +1007,7 @@
         "onceDelay": 0.1,
         "topic": "",
         "x": 710,
-        "y": 760,
+        "y": 740,
         "wires": [
             [
                 "26b63247279de23d"
@@ -1047,30 +1028,11 @@
         "finalize": "",
         "libs": [],
         "x": 350,
-        "y": 580,
+        "y": 560,
         "wires": [
             [
-                "b000dc2b72a6640e"
+                "9743a68c22620124"
             ]
-        ]
-    },
-    {
-        "id": "b000dc2b72a6640e",
-        "type": "function",
-        "z": "d3bafc4d888d1327",
-        "g": "db0763cc983c9bdb",
-        "name": "Controlador PI Local",
-        "func": "// % Controlador PI\n// u(k) = b0_c * e(k) + b1_c * e(k - 1) + u(k - 1);\n\n// variables del PI\n// % Parámetros del controlador PI\nvar Kp = 1.81e-6;\nvar Ki = 1.24e-6;\nvar T = global.get('TiempoMuestreo')||1; //% Tiempo de muestreo\nvar b0_c = Kp + Ki * T;\nvar b1_c = -Kp;\n// variables del calculo del error\nvar error = msg.payload;\nvar error_k1 = context.get('error_k1','memoryOnly')||0;\nvar u1 = context.get('u1','memoryOnly')||0;\nvar u = b0_c * error + b1_c * error_k1 + u1;\nnode.status({ fill: \"blue\", shape: \"ring\", text: \"u\" + u });\n\n// consulta de variables de monitoreo\ncontext.set('monitoreo', {'errores':{error,error_k1},'salidasControl':{u,u1}}, 'memoryOnly');\n\n// guardar el error anterior\ncontext.set('error_k1', error , 'memoryOnly');\n\n// guardar la salida anterior del PI\ncontext.set('u1', u , 'memoryOnly');\n\n// guardar variable global del PID\nvar SalidaPID = global.set('SalidaPID', u,'memoryOnly') ;\nreturn msg;",
-        "outputs": 1,
-        "timeout": "",
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 600,
-        "y": 580,
-        "wires": [
-            []
         ]
     },
     {
@@ -1084,7 +1046,7 @@
                 "t": "set",
                 "p": "TiempoMuestreo",
                 "pt": "global",
-                "to": "1",
+                "to": "0.1",
                 "tot": "num"
             }
         ],
@@ -1094,7 +1056,7 @@
         "to": "",
         "reg": false,
         "x": 380,
-        "y": 880,
+        "y": 860,
         "wires": [
             []
         ]
@@ -1112,7 +1074,7 @@
         "onceDelay": 0.1,
         "topic": "",
         "x": 180,
-        "y": 880,
+        "y": 860,
         "wires": [
             [
                 "c398b05cbaa4da5b"
@@ -1120,22 +1082,68 @@
         ]
     },
     {
-        "id": "7bdac0345f2d726d",
+        "id": "fc59d02bacf07647",
+        "type": "mqtt out",
+        "z": "d3bafc4d888d1327",
+        "g": "62dc588bb013aa5d",
+        "name": "",
+        "topic": "device/MQTTBroker/entradaNUBE",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "eb8f10b9cdca97c8",
+        "x": 1340,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "a5e118120cdb21e5",
+        "type": "change",
+        "z": "d3bafc4d888d1327",
+        "g": "db0763cc983c9bdb",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "#:(memoryOnly)::SalidaPID",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 860,
+        "y": 560,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9743a68c22620124",
         "type": "function",
         "z": "d3bafc4d888d1327",
         "g": "db0763cc983c9bdb",
-        "name": "PI",
-        "func": "// Traer los parámetros globales\nvar reference = global.get('setPoint_Presion') || 0;  // Valor deseado (referencia)\nvar output = global.get('presion') || 0;  // Salida actual del sistema\n\n// Traer los parámetros anteriores\nvar uk = Math.abs(reference - output);  // Error actual\nvar uk1 = flow.get('uk1') || 0;  // Error anterior\nvar yk = 0;  // Salida actual\nvar yk1 = flow.get('yk1') || 0;  // Salida anterior\n\n// Parámetros del controlador PI\nvar Kp = 1.81e-6;  // Ganancia proporcional\nvar Ki = 1.24e-6;  // Ganancia integral\nvar T = 1;  // Tiempo de muestreo (s)\n\n// Término proporcional\nvar b0_p = Kp;\n\n// Término integral\nvar b0_i = Ki * T / 2;\nvar b1_i = Ki * T / 2;\n\n// Calcular las salidas del controlador\n// Proporcional\nvar y_p = b0_p * uk;\n\n// Integral\nvar y_i = b0_i * uk + b1_i * uk1 + yk1;\n\n// Salida total del PI\nyk = y_p + y_i;\n\n// Actualizar el mensaje\nmsg.payload = yk;\n\n// Visualización en el nodo\nnode.status({ fill: \"green\", shape: \"dot\", text: \"PI Output: \" + yk });\n\n// Almacenar las variables necesarias para la próxima iteración\nflow.set('yk1', yk);  // Guardar salida anterior\nflow.set('uk1', uk);  // Guardar error anterior\n\n// Guardar los coeficientes y monitoreo para depuración\ncontext.set('monitoreo', { \n    ctsProporcional: { b0_p }, \n    ctsIntegrales: { b0_i, b1_i } \n}, 'memoryOnly');\n\nreturn msg;\n\n\n",
+        "name": "Controlador PI Local",
+        "func": "// % Controlador PI\n// u(k) = b0_c * e(k) + b1_c * e(k - 1) + u(k - 1);\n\n// variables del PI\n// % Parámetros del controlador PI\nvar Kp = 2.54e-6;\nvar Ki = 1.68e-6;\nvar T = global.get('TiempoMuestreo')||1; //% Tiempo de muestreo\nvar b0PI = Kp + Ki * T;\nvar b1PI = -Kp;\n// variables del calculo del error\nvar error = msg.payload;\nvar error_k1 = context.get('error_k1','memoryOnly')||0;\nvar u1 = context.get('u1','memoryOnly')||0;\n\n\n// ecuacion de control  PI\nvar u = b0PI * error + b1PI * error_k1 + u1;\n\nmsg.payload = u;\nnode.status({ fill: \"blue\", shape: \"ring\", text: \"u\" + u });\n\n// consulta de variables de monitoreo\ncontext.set('monitoreo', { 'errores': { error, error_k1 }, 'ganancia': { b0PI, b1PI},'salidasControl':{u,u1}}, 'memoryOnly');\n// guardar el error anterior\ncontext.set('error_k1', error , 'memoryOnly');\n// guardar la salida anterior del PI\ncontext.set('u1', u , 'memoryOnly');\nreturn msg;",
         "outputs": 1,
-        "timeout": "",
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 910,
-        "y": 580,
+        "x": 600,
+        "y": 560,
         "wires": [
-            []
+            [
+                "a5e118120cdb21e5"
+            ]
         ]
     }
 ]
